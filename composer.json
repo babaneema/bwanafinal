@@ -1,0 +1,27 @@
+{
+    "name": "agriedo/bwanashamba-app",
+    "description": "Webased software",
+    "version": "0.0.1",
+    "type": "webbase",
+    "authors": [
+        {
+            "name": "Sunday Jabil Phery",
+            "email": "sundayjabir@gmail.com",
+            "role": "Software developer"
+        }
+    ],
+    "require": {
+        "phpunit/phpunit": "^9.3",
+        "verot/class.upload.php": "^2.1"
+    },
+    "config": {
+        "platform": {
+            "php": "8.0.6"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "./App"
+        }
+    }
+}
