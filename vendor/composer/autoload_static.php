@@ -30,6 +30,10 @@ class ComposerStaticInit1b34c49882193ca66431311a721d9bc9
             'Prophecy\\' => 9,
             'PhpParser\\' => 10,
         ),
+        'M' => 
+        array (
+            'Medoo\\' => 6,
+        ),
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
@@ -63,6 +67,10 @@ class ComposerStaticInit1b34c49882193ca66431311a721d9bc9
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
+        ),
+        'Medoo\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/catfan/medoo/src',
         ),
         'Doctrine\\Instantiator\\' => 
         array (

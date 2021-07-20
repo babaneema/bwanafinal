@@ -12,7 +12,8 @@
     ],
     "require": {
         "phpunit/phpunit": "^9.3",
-        "verot/class.upload.php": "^2.1"
+        "verot/class.upload.php": "^2.1",
+        "catfan/medoo": "^2.1"
     },
     "config": {
         "platform": {
