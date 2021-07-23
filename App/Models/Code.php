@@ -16,11 +16,11 @@ use \DateTimeZone;
 // error_reporting(E_ALL);
 
 
-class Farmer extends Connection
+class Code extends Connection
 {
     private $database;
     private array $field;
-    private $table_name = 'farmer';
+    private $table_name = 'verification_codes';
     private $date;
 
     public function __construct()
@@ -28,9 +28,8 @@ class Farmer extends Connection
 
         $this->database = parent::connect();
         $this->field = [
-            'farmer_id', 'farmer_name', 'farmer_gender', ' farmer_district',
-            'age_group', 'activities', 'famer_phone', 'farmer_email',
-            'password', 'farmer_status', 'farmer_reg_date'
+            'code_id', 'code_farmer', 'code', ' used',
+            'code_type', 'code_reg_date',
         ];
         $this->date = new DateTime(null, new DateTimeZone('Africa/Dar_es_Salaam'));
     }
@@ -42,68 +41,49 @@ class Farmer extends Connection
         return  $data;
     }
 
-    public function getAllById($farmer_id)
+    public function getAllByCode($code)
     {
         $data = $this->database->select(
             $this->table_name,
             $this->field,
             [
-                'farmer_id' => $farmer_id
+                'code' => $code
             ]
-        );
-        if ($this->database->error) return $this->database->errorInfo;
-        return  $data;
-    }
-
-    public function getAllByColumn($column, $value)
-    {
-        $data = $this->database->select(
-            $this->table_name,
-            $this->field,
-            [$column => $value]
         );
         // if ($this->database->error) return $this->database->errorInfo;
         if ($this->database->error) return false;
+        return  $data;
+    }
+
+
+    public function codeUsed($code)
+    {
+        $data = $this->database->has($this->table_name, [
+            'code' => $code
+        ]);
+        if ($this->database->error) return $this->database->errorInfo;
         return  $data;
     }
 
     public function create(array $data)
     {
         $this->database->insert($this->table_name, [
-            "farmer_name" => $data['farmer_name'],
-            "farmer_gender" => $data['farmer_gender'],
-            "farmer_district" => $data['farmer_district'],
-            "age_group" => $data['age_group'],
-            "activities" => $data['activities'],
-            "famer_phone" => $data['famer_phone'],
-            "farmer_email" => $data['farmer_email'],
-            "password" => $data['password'],
-            "farmer_reg_date" =>  $this->date->format('Y-m-d'),
+            "code_farmer" => $data['code_farmer'],
+            "code" => $data['code'],
+            "code_type" => $data['code_type'],
+            "code_reg_date" =>  $this->date->format('Y-m-d'),
         ]);
 
         if ($this->database->error) return $this->database->errorInfo;
-        return $this->database->id();
-    }
-
-    public function activate($farmer_id)
-    {
-        $this->database->update(
-            $this->table_name,
-            ["farmer_status" => 'active'],
-            ["farmer_id" => $farmer_id]
-        );
-
-        // if ($this->database->error) return $this->database->errorInfo;
-        if ($this->database->error) return false;
         return  true;
     }
 
-    public function changePassword($farmer_id, $password)
+    public function activate($code)
     {
         $this->database->update(
             $this->table_name,
-            ["password" => $password],
-            ["farmer_id" => $farmer_id]
+            ["used" => 'yes'],
+            ["code" => $code]
         );
 
         // if ($this->database->error) return $this->database->errorInfo;
@@ -127,6 +107,17 @@ class Farmer extends Connection
         );
 
         if ($this->database->error) return $this->database->errorInfo;
+        return  true;
+    }
+
+    public function delete($code)
+    {
+        $this->database->delete(
+            $this->table_name,
+            ["code" => $code]
+        );
+        // if ($this->database->error) return $this->database->errorInfo;
+        if ($this->database->error) return false;
         return  true;
     }
 }

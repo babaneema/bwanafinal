@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+// namespace App\Models;
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) session_start();
 
 
 // ini_set('display_errors', 1);
@@ -12,7 +12,7 @@ session_start();
 
 
 include_once '../../../vendor/autoload.php';
-
+include_once '../sms/sendSms.php';
 
 if (
     isset($_POST['fname']) && isset($_POST['mname']) && isset($_POST['lname']) &&
@@ -23,7 +23,7 @@ if (
 
     // Handle for upload
 
-    $farmer = new Farmer();
+    $farmer = new \App\Models\Farmer();
 
     // Variables
     $name = $_POST['fname'] . " " . $_POST['mname'] . " " . $_POST['lname'];
@@ -32,6 +32,7 @@ if (
     $gender = $_POST['gender'];
     $district = $_POST['district'];
     $phone = $_POST['phone'];
+    $phone = '255' . substr($phone, 1);
 
 
 
@@ -48,18 +49,51 @@ if (
         'password' => $passwrd,
     );
 
-    $farmer->setData($data);
-    $savedData = $farmer->create();
+    $savedData = $farmer->create($data);
 
     if (is_array($savedData)) {
-        $response['response_status'] = '501';
-        $response['error_type'] = $savedData['error_type'];
-        $response['code_number'] = $savedData['code_number'];
-        $response['message'] = $savedData['message'];
 
-        $erro = strstr($savedData['message'], 'Duplicate');
+        $_SESSION['saveFarmerError'] = $savedData[2];
+        header('Location: ../register.php');
+        exit;
+    }
 
-        $_SESSION['saveFarmerError'] = $erro;
+    $token = substr(uniqid(), -6);
+
+    // verification code
+    $verficationCode = new \App\Models\Code();
+
+    while ($verficationCode->codeUsed($token)) {
+        $token = substr(uniqid(), -6);
+    }
+
+    $farmer_id = $savedData;
+    // save token
+    $codeData = array(
+        'code_farmer' =>  $farmer_id,
+        'code' => $token,
+        'code_type' => 'registration',
+    );
+
+    $codeSave =  $verficationCode->create($codeData);
+
+    if (is_array($codeSave)) {
+
+        $_SESSION['saveFarmerError'] = $codeSave[2];
+        header('Location: ../register.php');
+        exit;
+    }
+
+
+    $massage = 'Thank you for  registering on Bwanashamba app. Your verification code is : ' . $token;
+    $number = $phone;
+
+    if (sendSms(number: $number, massage: $massage)) {
+        $_SESSION['farmerContact'] = $phone;
+        header('Location: ../verification.php');
+        exit;
+    } else {
+        $_SESSION['saveFarmerError'] = 'Failed to send massage';
         header('Location: ../register.php');
         exit;
     }

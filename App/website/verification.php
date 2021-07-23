@@ -1,19 +1,14 @@
 <?php
+
+
 if (session_status() === PHP_SESSION_NONE) session_start();
-$saveError = '';
 
-// check if there is an error
-
+if (!isset($_SESSION['farmerContact']) && !isset($_SESSION['farmerContactRest'])) header('Location: ./index.php');
 
 $saveError = '';
-if (isset($_SESSION['loginError'])) {
-    $saveError = 'Fill all the data fields';
-    unset($_SESSION['loginError']);
-}
-
-if (isset($_SESSION['loginFailed'])) {
-    $saveError = 'Wrong credentials';
-    unset($_SESSION['loginFailed']);
+if (isset($_SESSION['verificationError'])) {
+    $saveError = $_SESSION['verificationError'];
+    unset($_SESSION['verificationError']);
 }
 
 
@@ -52,7 +47,7 @@ if (isset($_SESSION['loginFailed'])) {
                             </li>
                             <li>
                                 <a href="#">
-                                    <span>Login</span>
+                                    <span>Verification</span>
                                 </a>
                             </li>
                         </ol>
@@ -67,26 +62,22 @@ if (isset($_SESSION['loginFailed'])) {
             <div id="content-wrapper" class="full-width">
                 <div id="main">
                     <div class="container">
-                        <h1 class="text-center title-page">Log In</h1>
+                        <h1 class="text-center title-page">Verification</h1>
                         <div class="login-form">
-                            <form id="customer-form" action="./process/processLogin.php" method="post">
+                            <form id="customer-form" action="./process/verify.php" method="post">
                                 <div>
                                     <div class="form-group">
                                         <h4 class="bg-danger text-center  text-white"> <?= $saveError ?></h4>
                                     </div>
                                     <input type="hidden" name="back" value="my-account">
                                     <div class="form-group no-gutters">
-                                        <label for="">Phone number</label> <br>
-                                        <input class="form-control" required="required" name="phone" type="text" placeholder=" Phone numer">
-                                    </div>
-                                    <div class="form-group no-gutters">
-                                        <label for="">Password</label>
-                                        <input class="form-control" name="password" type="password" required="required" placeholder="Password">
+                                        <label for="">Verification Code</label>
+                                        <input class="form-control" max="6" min="6" required="required" name="code" type="text">
                                     </div>
                                     <div class="no-gutters text-center">
                                         <div class="forgot-password">
-                                            <a href="forgetPassword.php" rel="nofollow">
-                                                Forgot your password?
+                                            <a href="./process/resendVerificationCode.php" rel="nofollow">
+                                                Resend verification code
                                             </a>
                                         </div>
                                     </div>
@@ -95,7 +86,7 @@ if (isset($_SESSION['loginFailed'])) {
                                     <div class="text-center no-gutters">
                                         <input type="hidden" name="submitLogin" value="1">
                                         <button class="btn btn-primary" data-link-action="sign-in" type="submit">
-                                            Sign in
+                                            Verify
                                         </button>
                                     </div>
                                 </div>

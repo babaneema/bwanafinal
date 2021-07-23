@@ -1,9 +1,15 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
+
+if (!isset($_SESSION['resetPasswordCode'])) {
+    header('Location: ./login.php');
+    exit;
+}
 $saveError = '';
-if (isset($_SESSION['resetPasswordVerfication'])) {
-    $saveError = $_SESSION['resetPasswordVerfication'];
-    unset($_SESSION['resetPasswordVerfication']);
+if (isset($_SESSION['changePasswordError'])) {
+    $saveError = $_SESSION['changePasswordError'];
+    $saveError = 'Fill all the blanks';
+    unset($_SESSION['changePasswordError']);
 }
 
 ?>
@@ -56,7 +62,7 @@ if (isset($_SESSION['resetPasswordVerfication'])) {
                     <div id="content-wrapper" class="onecol">
                         <div id="main">
                             <div class="page-content">
-                                <form action="./process/sendResetVerificationCode.php" class="forgotten-password" method="post">
+                                <form action="./process/changePassword.php" class="forgotten-password" method="post">
                                     <h1 class="text-center title-page">Change Password</h1>
                                     <div class="form-group">
                                         <h4 class="bg-danger text-center  text-white"> <?= $saveError ?></h4>
@@ -64,19 +70,15 @@ if (isset($_SESSION['resetPasswordVerfication'])) {
                                     <div class="form-fields text-center ">
                                         <div class="form-group center-email-fields">
                                             <div class="email text-left">
-                                                <label for="">Phone number</label>
-                                                <input type="text" name="phone" required class="form-control" placeholder="Phone number">
+                                                <label for="">New password</label>
+                                                <input type="password" name="password" required class="form-control" min="8">
                                             </div>
                                             <div>
                                                 <button class="form-control-submit btn btn-primary" name="submit" type="submit">
-                                                    Send verification code
+                                                    Change password
                                                 </button>
                                             </div>
                                         </div>
-                                        <a href="login.php" class="account-link">
-                                            <i class="fa fa-angle-left" aria-hidden="true"></i>
-                                            <span class="text-center">Back to login</span>
-                                        </a>
                                     </div>
                                 </form>
                             </div>

@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) session_start();
+
 
 include_once '../../vendor/autoload.php';
 
@@ -74,43 +75,45 @@ if (isset($_SESSION['saveFarmerError'])) {
 
         <!-- main -->
         <div id="wrapper-site">
-            <div class="container">
+            <div class="container bg-light">
                 <div class="row">
                     <div id="content-wrapper" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 onecol">
                         <div id="main">
                             <div id="content" class="page-content">
-                                <div class="register-form text-center">
+                                <div class="register-form ">
                                     <h1 class="text-center title-page">Register</h1>
                                     <form action="./process/processRegistration.php" id="customer-form" class="js-customer-form" method="POST">
                                         <div>
                                             <div class="form-group">
                                                 <h4 class="bg-danger text-center  text-white"> <?= $saveError ?></h4>
                                             </div>
-                                            <div class="form-group">
-                                                <div>
-                                                    <input class="form-control" required="required" name="fname" type="text" placeholder="First name">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <label for="">First Name *</label>
+                                                    <input class="form-control" required="required" name="fname" type="text">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label for="">Middle Name *</label>
+                                                    <input class="form-control" required="required" name="mname" type="text">
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <label for="">Last Name *</label>
+                                                    <input class="form-control" required="required" name="lname" type="text">
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <div>
-                                                    <input class="form-control" required="required" name="mname" type="text" placeholder="Middle name">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div>
-                                                    <input class="form-control" required="required" name="lname" type="text" placeholder="Last name">
-                                                </div>
-                                            </div>
-                                            <div class="form-group text-left">
-                                                <div>
+
+                                            <div class="form-group text-left row">
+                                                <div class="col-sm-4">
+                                                    <label for="" class="mr-2">Gender</label> <br>
                                                     <input class="mr-2" name="gender" value="Male" type="radio" checked>
                                                     <label for="" class="mr-2">Male</label>
                                                     <input class="mr-2" name="gender" value="Female" type="radio">
                                                     <label for="" class="mr-2">Female</label>
                                                 </div>
-                                            </div>
-                                            <div class="form-group text-left">
-                                                <div>
+                                                <div class="col-sm-8">
                                                     <label for="" class="mr-2">Age Group</label> <br>
                                                     <input class="mr-2" name="age_group" value="18 - 35" type="radio" checked>
                                                     <label for="" class="mr-2">18 - 35 </label>
@@ -120,18 +123,12 @@ if (isset($_SESSION['saveFarmerError'])) {
                                                     <label for="" class="mr-2">46 - above</label>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <div>
-                                                    <select name="activity" required="required" id="" class="form-control">
-                                                        <option value="" selected> Type of activities you are involved</option>
-                                                        <option value="Horticulture">Horticulture</option>
-                                                        <option value="Cash Crops">Cash Crops</option>
-                                                        <option value="Both">Both</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div>
+
+                                            <hr class="mt-4 mb-4 bg-white">
+
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <label for="">Region</label>
                                                     <select class="form-control" id="region">
                                                         <?php
                                                         foreach ($regions as $rdata) {
@@ -145,28 +142,38 @@ if (isset($_SESSION['saveFarmerError'])) {
 
                                                     </select>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div>
+                                                <div class="col-sm-6">
+                                                    <label for="">District</label>
                                                     <select class="form-control" id="districts" name="district" required="required">
 
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <div>
-                                                    <input class="form-control" required="required" name="phone" type="text" placeholder="Phone number">
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <label for="">Activity Involved</label>
+                                                    <select name="activity" required="required" id="" class="form-control">
+                                                        <option value="Horticulture">Horticulture</option>
+                                                        <option value="Cash Crops">Cash Crops</option>
+                                                        <option value="Both">Both</option>
+                                                    </select>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <div>
-                                                    <input class="form-control" name="email" type="email" placeholder="Email">
+                                            <hr class="mt-4 mb-4 bg-white">
+                                            <div class="form-group row ">
+                                                <div class="col-sm-6">
+                                                    <label for="">Phone number *</label>
+                                                    <input class="form-control" required="required" name="phone" type="text" pattern="^[0]{1}[6,7]{1}[1-8]{1}[0-9]{7}$" minlength="10" maxlength="10">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label for="">Email</label>
+                                                    <input class="form-control" name="email" type="email">
                                                 </div>
                                             </div>
 
-
-                                            <div class="form-group">
-                                                <div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <label for="">Password *</label>
                                                     <div class="input-group js-parent-focus">
                                                         <input min="8" class="form-control js-child-focus js-visible-password" name="password" type="password" placeholder="Password">
                                                     </div>
@@ -245,6 +252,11 @@ if (isset($_SESSION['saveFarmerError'])) {
                 });
 
             });
+        });
+    </script>
+    <script>
+        $(document).ready(() => {
+
         });
     </script>
 </body>

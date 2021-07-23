@@ -86,7 +86,19 @@ class ComposerStaticInit1b34c49882193ca66431311a721d9bc9
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'H' => 
+        array (
+            'HTTP_Request2' => 
+            array (
+                0 => __DIR__ . '/..' . '/pear/http_request2',
+            ),
+        ),
+    );
+
     public static $classMap = array (
+        'Net_URL2' => __DIR__ . '/..' . '/pear/net_url2/Net/URL2.php',
+        'PEAR_Exception' => __DIR__ . '/..' . '/pear/pear_exception/PEAR/Exception.php',
         'PHPUnit\\Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit\\Framework\\ActualValueIsNotAnObjectException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/ActualValueIsNotAnObjectException.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert.php',
@@ -720,6 +732,7 @@ class ComposerStaticInit1b34c49882193ca66431311a721d9bc9
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit1b34c49882193ca66431311a721d9bc9::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit1b34c49882193ca66431311a721d9bc9::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit1b34c49882193ca66431311a721d9bc9::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit1b34c49882193ca66431311a721d9bc9::$classMap;
 
         }, null, ClassLoader::class);
