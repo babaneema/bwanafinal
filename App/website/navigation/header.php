@@ -1,6 +1,17 @@
 <?php
 $hide = true;
-(empty($farmer_data)) ? $hide = false : $hide = true;
+$name = 'Welcome';
+if (!empty($farmer_data)) {
+    if ($agronomy) {
+        $name = $farmer_data['agro_name'];
+        $link = '../agronomist/index.php';
+    } else {
+        $name = $farmer_data['farmer_name'];
+        $link = 'account.php';
+    }
+
+    $hide = true;
+} else $hide = false;
 ?>
 <header>
     <!-- header left mobie -->
@@ -96,7 +107,7 @@ $hide = true;
                                 <span>
                                     <?php
                                     if ($hide) {
-                                        echo $farmer_data['farmer_name'];
+                                        echo $name;
                                     } else {
                                         echo 'Welcome';
                                     }
@@ -108,7 +119,7 @@ $hide = true;
                         <div id="acount" class="collapse">
                             <div class="account-list-content">
                                 <div>
-                                    <a class="login" href="account.php" rel="nofollow" title="Log in to your customer account">
+                                    <a class="login" href="<?= $link ?>" rel="nofollow" title="Log in to your customer account">
                                         <i class="fa fa-cog"></i>
                                         <span>My Account</span>
                                     </a>

@@ -153,7 +153,7 @@ if (isset($_SESSION['fileAgronomistError'])) {
                                                 <div class="col-lg-4 mb-1">
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="basic-addon1">Phone</span>
-                                                        <input type="text" class="form-control" placeholder="+2557xxx" min="10" max="12" name="contact" required="required">
+                                                        <input type="text" class="form-control" placeholder="2557xxx" min="10" max="12" name="contact" required="required">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4 mb-1">
@@ -220,7 +220,6 @@ if (isset($_SESSION['fileAgronomistError'])) {
                                                             <option selected>Choose...</option>
                                                             <option value="Horticulture">Horticulture</option>
                                                             <option value="Cash Crops">Cash Crops</option>
-                                                            <option value="Veterinarian">Veterinarian</option>
                                                         </select>
                                                     </div>
                                                 </div>

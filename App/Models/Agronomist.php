@@ -6,6 +6,7 @@ namespace App\Models;
 
 
 use App\Models\Database;
+use App\Models\Connection;
 
 
 use \Datetime;
@@ -16,74 +17,111 @@ use \DateTimeZone;
 // error_reporting(E_ALL);
 
 
-
-class Agronomist extends Database
+class Agronomist extends Connection
 {
-
-
-    // table properties
-    protected array $colums_data;
-    protected array $colums_head;
-    protected $date;
-
-    private String $table_name = 'agronomist';
-
-
+    private $database;
+    private array $field;
+    private $table_name = 'agronomist';
+    private $date;
 
     public function __construct()
     {
-        $this->colums_data = [
-            'id' => '',
-            'agro_name' => '',
-            'agro_birthdate' => '',
-            'agro_gender' => '',
-            'agro_district' => '',
-            'agro_phone' => '',
-            'agro_email' => '',
-            'password' => '',
-            'agro_education' => '',
-            'agro_certificate' => '',
-            'agro_specialize' => '',
-            'agro_cv' => '',
-            'agro_picture' => '',
-            'agro_red_date' => '',
+
+        $this->database = parent::connect();
+        $this->field = [
+            'agro_id', 'agro_name', 'agro_birthdate', ' agro_gender', 'agro_district',
+            'agro_phone', 'agro_email', 'agro_password', 'agro_education',
+            'agro_certificate', 'agro_specialize', 'agro_cv', 'agro_picture',
+            'agro_unique', 'agro_red_date',
         ];
-        $this->colums_head = array_keys($this->colums_data);
         $this->date = new DateTime(null, new DateTimeZone('Africa/Dar_es_Salaam'));
-        parent::__construct();
     }
 
     public function getAllData()
     {
-        return parent::superGetAllData($this->table_name);
+        $data = $this->database->select($this->table_name, $this->field);
+        if ($this->database->error) return [];
+        return  $data;
     }
 
-    public function singeleAgrodata($id)
+    public function singeleAgrodata($uniq)
     {
-        return parent::superGetDataByColumn(table_name: 'agronomist', column: 'id', value: $id);
+        $data = $this->database->select(
+            $this->table_name,
+            $this->field,
+            [
+                'agro_unique' => $uniq
+            ]
+        );
+        // if ($this->database->error) return $this->database->errorInfo;
+        if ($this->database->error) return false;
+        return  $data;
     }
 
-    public function getAgrodataByDistrict($id)
+    public function getAllByColumn($column, $value)
     {
-        $sql = "SELECT * FROM  agronomist  WHERE agro_district=?";
-        return parent::superSqlWhere($sql, $id);
+        $data = $this->database->select(
+            $this->table_name,
+            $this->field,
+            [$column => $value]
+        );
+        // if ($this->database->error) return $this->database->errorInfo;
+        if ($this->database->error) return false;
+        return  $data;
     }
 
-    public function setData(array $data)
+
+    public function create(array $data)
     {
-        foreach ($data as $key => $value) $this->colums_data[$key] = $value;
-        $this->colums_data['agro_red_date'] = $this->date->format('Y-m-d');
+        $this->database->insert($this->table_name, [
+            "agro_name" => $data['agro_name'],
+            "agro_birthdate" => $data['agro_birthdate'],
+            "agro_gender" => $data['agro_gender'],
+            "agro_district" => $data['agro_district'],
+            "agro_phone" => $data['agro_phone'],
+            "agro_email" => $data['agro_email'],
+            "agro_password" => $data['agro_password'],
+            "agro_education" => $data['agro_education'],
+            "agro_certificate" => $data['agro_certificate'],
+            "agro_specialize" => $data['agro_specialize'],
+            "agro_cv" => $data['agro_cv'],
+            "agro_picture" => $data['agro_picture'],
+            "agro_unique" => $data['agro_unique'],
+            "agro_red_date" =>  $this->date->format('Y-m-d'),
+        ]);
+
+        if ($this->database->error) return $this->database->errorInfo;
+        return  true;
     }
 
-    public function create()
-    {
-        // coppy array remove id and create a head and data
-        $insert_data = $this->colums_data;
-        unset($insert_data['id']);
-        $colum_head = array_keys($insert_data);
-        $data = array_values($insert_data);
 
-        $save = parent::superCreate(table_name: $this->table_name, colums_in: $colum_head, data: $data);
-        return $save;
+    public function update(array $data)
+    {
+        $this->database->update(
+            $this->table_name,
+            [
+                "crop_name" => $data['crop_name'],
+                "crop_type" => $data['crop_type'],
+                "crop_measurement" => $data['crop_measurement'],
+                "crop_grades" => $data['crop_grades'],
+            ],
+            [
+                "crop_id" => $data['crop_id']
+            ]
+        );
+
+        if ($this->database->error) return $this->database->errorInfo;
+        return  true;
+    }
+
+    public function delete($id)
+    {
+        $this->database->delete(
+            $this->table_name,
+            ["agro_id" => $id]
+        );
+        // if ($this->database->error) return $this->database->errorInfo;
+        if ($this->database->error) return false;
+        return  true;
     }
 }

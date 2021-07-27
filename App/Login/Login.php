@@ -21,7 +21,7 @@ class Login extends Connection
         $this->database = parent::connect();
     }
 
-    public function login($table_name, $column, $value, $password)
+    public function login($table_name, $column, $value, $password, $status = 'farmer_status', $pass = 'password')
     {
         $this->table_name = $table_name;
         $this->column = $column;
@@ -29,10 +29,10 @@ class Login extends Connection
 
         $data = $this->getAllByColumn();
         if (is_array($data)) {
-            $active = $data[0]['farmer_status'] == 'active' ? true : false;
-            $ver = password_verify($password, $data[0]['password']);
+            $active = $data[0][$status] == 'active' ? true : false;
+            $ver = password_verify($password, $data[0][$pass]);
             if ($ver && $active) {
-                $this->key = $data[0]['password'];
+                $this->key = $data[0][$pass];
                 return true;
             }
             return false;

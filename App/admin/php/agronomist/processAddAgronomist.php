@@ -12,6 +12,8 @@ session_start();
 
 include_once '../../../../vendor/autoload.php';
 
+include_once '../../../sms/sendSms.php';
+
 
 $upload_image_location = '../../../Assets/agronomist/images';
 $upload_pdf_location = '../../../Assets/agronomist/cvs';
@@ -64,6 +66,8 @@ if (
             $img_path_full = 'Assets/agronomist/images/' . $image_name . '.' . $image_handle->file_src_name_ext;
             $pdf_path_full = 'Assets/agronomist/cvs/' . $pdf_name . '.' . $pdf_handle->file_src_name_ext;
 
+            $token = uniqid();
+
             // save data to database
             $data = array(
                 'agro_name' => $name,
@@ -72,29 +76,43 @@ if (
                 'agro_district' => $district,
                 'agro_phone' => $contact,
                 'agro_email' => $email,
-                'password' => $passwrd,
+                'agro_password' => $passwrd,
                 'agro_education' => $education,
                 'agro_certificate' => $certificate,
                 'agro_specialize' => $specialize,
                 'agro_cv' => $pdf_path_full,
                 'agro_picture' => $img_path_full,
+                'agro_unique' => $token,
             );
 
-            $agronomist->setData($data);
-            $savedData = $agronomist->create();
+            $savedData = $agronomist->create($data);
 
             if (is_array($savedData)) {
-                $response['response_status'] = '501';
-                $response['error_type'] = $savedData['error_type'];
-                $response['code_number'] = $savedData['code_number'];
-                $response['message'] = $savedData['message'];
+                // $response['response_status'] = '501';
+                // $response['error_type'] = $savedData['error_type'];
+                // $response['code_number'] = $savedData['code_number'];
+                // $response['message'] = $savedData[2];
 
-                $erro = strstr($savedData['message'], 'Duplicate');
+                // $erro = strstr($savedData['message'], 'Duplicate');
 
-                $_SESSION['saveAgronomistError'] = $erro;
+                $_SESSION['saveAgronomistError'] = $savedData[2];
                 header('Location: ../../addAgronomist.php');
                 exit;
             }
+
+            $massage = 'Thank you for  registering on Bwanashamba app.To login is use your phonenumber and password  is : ' . $password;
+            $number = $contact;
+
+            if (sendSms(number: $number, massage: $massage)) {
+                $_SESSION['saveAgronomistSuccess'] = 'Success Sending Sms';
+                header('Location: ../../viewAgronomists.php');
+                exit;
+            } else {
+                $_SESSION['saveAgronomistSuccess'] = 'Failed to send massage';
+                header('Location: ../../viewAgronomists.php');
+                exit;
+            }
+
 
             $_SESSION['saveAgronomistSuccess'] = True;
             header('Location: ../../viewAgronomists.php');

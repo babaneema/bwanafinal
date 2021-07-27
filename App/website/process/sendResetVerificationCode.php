@@ -55,7 +55,7 @@ if (isset($_POST['phone'])) {
         $number = $phone;
 
         if (sendSms(number: $number, massage: $massage)) {
-            $_SESSION['farmerContactRest'] = $phone;
+            $_SESSION['farmerContact'] = $phone;
             header('Location: ../verification.php');
             exit;
         } else {

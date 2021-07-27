@@ -2,7 +2,7 @@
 
 use PhpParser\Node\Expr\Isset_;
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) session_start();
 
 require_once './data/sidebarRegions.php';
 require_once './data/expertSingleData.php';
@@ -77,7 +77,7 @@ if (!$hide) {
                                     <div class="col-sm-8 col-lg-9 col-md-9">
                                         <div class="main-product-detail">
                                             <h3>
-                                                <?= $singleData['agro_name'] ?>
+                                                <?= $singleData[0]['agro_name'] ?>
                                             </h3>
                                             <div class="product-single row">
                                                 <div class="product-detail col-xs-12 col-md-5 col-sm-5">
@@ -124,10 +124,10 @@ if (!$hide) {
                                                                     <span>
                                                                         <?php
                                                                         if ($hide) {
-                                                                            echo $singleData['agro_phone'];
+                                                                            echo $singleData[0]['agro_phone'];
                                                                         } else {
-                                                                            $stlen = strlen($singleData['agro_phone']);
-                                                                            echo substr($singleData['agro_phone'], 0, intval($stlen - 3)) . '*****';
+                                                                            $stlen = strlen($singleData[0]['agro_phone']);
+                                                                            echo substr($singleData[0]['agro_phone'], 0, intval($stlen - 3)) . '*****';
                                                                         }
                                                                         ?>
 
@@ -143,9 +143,9 @@ if (!$hide) {
                                                                     <span>
                                                                         <?php
                                                                         if ($hide) {
-                                                                            echo $singleData['agro_email'];
+                                                                            echo $singleData[0]['agro_email'];
                                                                         } else {
-                                                                            $em = strstr($singleData['agro_email'], '@');
+                                                                            $em = strstr($singleData[0]['agro_email'], '@');
                                                                             echo  '*******' . $em;
                                                                         }
                                                                         ?>
@@ -162,9 +162,9 @@ if (!$hide) {
                                                                     <span>
                                                                         <?php
                                                                         if ($hide) {
-                                                                            echo $singleData['agro_certificate'];
+                                                                            echo $singleData[0]['agro_certificate'];
                                                                         } else {
-                                                                            echo $singleData['agro_certificate'];
+                                                                            echo $singleData[0]['agro_certificate'];
                                                                         }
                                                                         ?>
                                                                     </span>
@@ -177,7 +177,7 @@ if (!$hide) {
                                                                 <a href="#" class="email">
                                                                     <i class="fa fa-briefcase" aria-hidden="true"></i>
                                                                     <span>
-                                                                        <?php echo $singleData['agro_specialize'] ?>
+                                                                        <?php echo $singleData[0]['agro_specialize'] ?>
                                                                     </span>
                                                                 </a>
                                                             </div>

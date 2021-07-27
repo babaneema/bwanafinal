@@ -83,6 +83,13 @@ if (isset($_SESSION['loginFailed'])) {
                                         <label for="">Password</label>
                                         <input class="form-control" name="password" type="password" required="required" placeholder="Password">
                                     </div>
+                                    <div class="form-group no-gutters">
+                                        <label for="">Login as</label>
+                                        <select name="type" class="form-control">
+                                            <option value="farmer">Farmer</option>
+                                            <option value="expert">Expert</option>
+                                        </select>
+                                    </div>
                                     <div class="no-gutters text-center">
                                         <div class="forgot-password">
                                             <a href="forgetPassword.php" rel="nofollow">

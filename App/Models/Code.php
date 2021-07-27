@@ -55,6 +55,17 @@ class Code extends Connection
         return  $data;
     }
 
+    public function getAllByColumn($column, $value)
+    {
+        $data = $this->database->select(
+            $this->table_name,
+            $this->field,
+            [$column => $value]
+        );
+        // if ($this->database->error) return $this->database->errorInfo;
+        if ($this->database->error) return false;
+        return  $data;
+    }
 
     public function codeUsed($code)
     {

@@ -56,32 +56,43 @@ if (empty($farmer_data)) {
                             <table class="std table">
                                 <tbody>
                                     <tr>
-                                        <th class="first_item">My Name :</th>
-                                        <td>David James</td>
+                                        <th class="first_item">Name :</th>
+                                        <td><?= $farmer_data['farmer_name'] ?></td>
                                     </tr>
                                     <tr>
-                                        <th class="first_item">Company :</th>
-                                        <td>TivaTheme</td>
+                                        <th class="first_item">Gender :</th>
+                                        <td><?= $farmer_data['farmer_gender'] ?></td>
                                     </tr>
                                     <tr>
-                                        <th class="first_item">Address :</th>
-                                        <td>123 canberra Street, New York, USA</td>
+                                        <th class="first_item">Age group :</th>
+                                        <td><?= $farmer_data['age_group'] ?></td>
                                     </tr>
                                     <tr>
-                                        <th class="first_item">City :</th>
-                                        <td>New York</td>
+                                        <th class="first_item">Activity :</th>
+                                        <td><?= $farmer_data['activities'] ?></td>
                                     </tr>
                                     <tr>
-                                        <th class="first_item">Postal/Zip Code :</th>
-                                        <td>10001</td>
+                                        <th class="first_item">E-mail :</th>
+                                        <td><?= $farmer_data['farmer_email'] ?></td>
                                     </tr>
                                     <tr>
                                         <th class="first_item">Phone :</th>
-                                        <td>0123456789</td>
+                                        <td><?= $farmer_data['famer_phone'] ?></td>
                                     </tr>
                                     <tr>
-                                        <th class="first_item">Country:</th>
-                                        <td>USA</td>
+                                        <th class="first_item">Date :</th>
+                                        <td><?= $farmer_data['farmer_reg_date'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Funtion</th>
+                                        <td>
+                                            <button class="btn btn-sm btn-success">
+                                                Update
+                                            </button>
+                                            <button class="btn btn-sm btn-danger">
+                                                Delete Account
+                                            </button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

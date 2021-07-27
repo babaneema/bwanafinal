@@ -74,7 +74,7 @@ require_once './data/getFarmerData.php';
                                                         <div class="item text-center col-md-4">
                                                             <div class="product-miniature js-product-miniature item-one first-item">
                                                                 <div class="thumbnail-container border">
-                                                                    <a href="viewExpert.php?agrod_id=<?= $data['id'] ?>">
+                                                                    <a href="viewExpert.php?agrod_id=<?= $data['agro_unique'] ?>">
                                                                         <img class="img-fluid image-cover image-modi" src="<?= $image ?>" alt="img">
                                                                         <img class="img-fluid image-secondary image-modi" src="<?= $image ?>" alt="img">
                                                                     </a>

@@ -20,6 +20,15 @@ class Connection
         // Server: remotemysql.com
         // Port: 3306
 
+        // return $this->conn = new Medoo([
+        //     'type' => 'mysql',
+        //     'host' => 'localhost',
+        //     'database' => 'bwanashambaapp',
+        //     'username' => 'bwanashambaapp',
+        //     'password' => 'bwanashambaapp2021',
+        //     'error' => PDO::ERRMODE_SILENT,
+        // ]);
+
         return $this->conn = new Medoo([
             'type' => 'mysql',
             'host' => 'localhost',

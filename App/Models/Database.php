@@ -33,9 +33,9 @@ class Database
 
         // Online host
         // $this->host = 'localhost';
-        // $this->db = 'id16159611_bwanashamba';
-        // $this->user  = 'id16159611_agriedo';
-        // $this->pass  = '0^cWv7gE&xuKM$2P';
+        // $this->db = 'bwanashambaapp';
+        // $this->user  = 'bwanashambaapp';
+        // $this->pass  = 'bwanashambaapp2021';
         // $this->port = "3306";
         // $this->charset = 'utf8mb4';
 
