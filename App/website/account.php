@@ -86,9 +86,9 @@ if (empty($farmer_data)) {
                                     <tr>
                                         <th>Funtion</th>
                                         <td>
-                                            <button class="btn btn-sm btn-success">
+                                            <a href="updateUser.php" class="btn btn-sm btn-success">
                                                 Update
-                                            </button>
+                                            </a>
                                             <button class="btn btn-sm btn-danger">
                                                 Delete Account
                                             </button>

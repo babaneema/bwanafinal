@@ -9,7 +9,7 @@ $agronomists = new \App\Models\Agronomist();
 
 if (isset($_GET['dist_id'])) {
     $districtId = $_GET['dist_id'];
-    $agroData = $agronomists->getAgrodataByDistrict($districtId);
+    $agroData = $agronomists->getAllByColumn('agro_district', $districtId);
 } else {
     $agroData = $agronomists->getAllData();
 }

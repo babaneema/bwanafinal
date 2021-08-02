@@ -79,7 +79,7 @@ if (!empty($farmer_data)) {
 
                             </li>
                             <li>
-                                <a href="#" class="parent">Service Provider</a>
+                                <a href="serviceProvider.php" class="parent">Service Provider</a>
 
                             </li>
                             <!-- <li>

@@ -1,4 +1,5 @@
 <?php
+include_once '../../vendor/autoload.php';
 include_once './php/service/getServiceProviderData.php';
 ?>
 <!DOCTYPE html>
@@ -36,15 +37,18 @@ include_once './php/service/getServiceProviderData.php';
                         <div class="card-header">
                             Crops Data
                         </div>
-                        <div class="card-body">
+                        <div class="card-body table-responsive">
                             <table class='table table-striped' id="table1">
                                 <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
+                                        <th>Type</th>
                                         <th>Email</th>
                                         <th>Service</th>
+                                        <th>HQ</th>
                                         <th>Date</th>
+                                        <th>Status</th>
                                         <th>Function</th>
                                     </tr>
                                 </thead>
@@ -56,11 +60,15 @@ include_once './php/service/getServiceProviderData.php';
                                         <tr>
                                             <td><?= ++$n ?></td>
                                             <td><?= $sericeP['provider_name'] ?></td>
+                                            <td><?= $sericeP['provider_business_type'] ?></td>
                                             <td><?= $sericeP['provider_email'] ?></td>
-                                            <td><?= $sericeP[' service_offered '] ?></td>
-                                            <td><?= $sericeP[' provider_reg_date '] ?></td>
+                                            <td><?= $sericeP['service_offered'] ?></td>
+                                            <td><?= $sericeP['district_name'] ?></td>
+                                            <td><?= $sericeP['provider_reg_date'] ?></td>
+                                            <td><?= $sericeP['provider_status'] ?></td>
                                             <td>
-                                                <button class="btn btn-primary">Update</button>
+                                                <a href="providerProducts.php?pass=<?= $sericeP['provider_unique'] ?>" class="btn btn-sm btn-success">Products</a>
+                                                <button class="btn btn-sm btn-primary">Update</button>
                                             </td>
                                         </tr>
                                     <?php

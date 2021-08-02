@@ -36,8 +36,11 @@ if (
     $provider = $_POST['provider'];
 
     $video_name = bin2hex(random_bytes(10));
+    $extention  = pathinfo($_FILES["learn_video"]['name'], PATHINFO_EXTENSION);
+    $video_name .= '.' . $extention;
     $target_file = $upload_video_location . '/' . $video_name;
-    $extention  = pathinfo($target_file, PATHINFO_EXTENSION);
+
+
 
     if (
         move_uploaded_file($_FILES["learn_video"]["tmp_name"], $target_file) &&
@@ -77,18 +80,12 @@ if (
                 'pdf_link' => $pdf_path_full,
             );
 
-            $learn->setData($data);
-            $savedData = $learn->create();
+
+            $savedData = $learn->create($data);
 
             if (is_array($savedData)) {
-                $response['response_status'] = '501';
-                $response['error_type'] = $savedData['error_type'];
-                $response['code_number'] = $savedData['code_number'];
-                $response['message'] = $savedData['message'];
 
-                $erro = strstr($savedData['message'], 'Duplicate');
-
-                $_SESSION['saveLearnError'] = $erro;
+                $_SESSION['saveLearnError'] = $savedData[2];
                 header('Location: ../../addLearing.php');
                 exit;
             }

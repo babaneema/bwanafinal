@@ -115,7 +115,7 @@ if (isset($_SESSION['fileLearnError'])) {
                                                             <?php
                                                             foreach ($providerData as $proData) {
                                                             ?>
-                                                                <option value="<?= $proData['id'] ?>">
+                                                                <option value="<?= $proData['provider_id'] ?>">
                                                                     <?= $proData['provider_name'] ?>
                                                                 </option>
                                                             <?php

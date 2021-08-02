@@ -1,4 +1,4 @@
-<h1>Information</h1>
+<h1>Services & Products</h1>
 <div class="js-product-list-top firt nav-top">
     <div class="d-flex justify-content-around row">
         <div class="col col-xs-12">
@@ -20,9 +20,9 @@
                 <div class="products-sort-order dropdown">
                     <select class="select-title">
                         <option value="">Sort by</option>
-                        <option value="">Hortculture</option>
-                        <option value="">Crops</option>
-                        <option value="">Veterian</option>
+                        <option value="">Input</option>
+                        <option value="">Machine</option>
+                        <option value="">Others</option>
                     </select>
                 </div>
             </div>

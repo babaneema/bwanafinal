@@ -81,7 +81,7 @@ if (!$hide) {
                                     <div class="col-sm-8 col-lg-9 col-md-9">
                                         <div class="main-product-detail">
                                             <h3>
-                                                <?= $singleData['subject_name'] ?>
+                                                <?= $singleData[0]['subject_name'] ?>
                                             </h3>
                                             <div class="product-single row">
                                                 <div class="product-detail col-xs-12 col-md-5 col-sm-5">

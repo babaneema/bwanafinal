@@ -106,8 +106,8 @@ class Farmer extends Connection
             ["farmer_id" => $farmer_id]
         );
 
-        // if ($this->database->error) return $this->database->errorInfo;
-        if ($this->database->error) return false;
+        if ($this->database->error) return $this->database->errorInfo;
+        // if ($this->database->error) return false;
         return  true;
     }
 
@@ -116,17 +116,22 @@ class Farmer extends Connection
         $this->database->update(
             $this->table_name,
             [
-                "crop_name" => $data['crop_name'],
-                "crop_type" => $data['crop_type'],
-                "crop_measurement" => $data['crop_measurement'],
-                "crop_grades" => $data['crop_grades'],
+                "farmer_name" => $data['farmer_name'],
+                "farmer_gender" => $data['farmer_gender'],
+                "farmer_district" => $data['farmer_district'],
+                "age_group" => $data['age_group'],
+                "activities" => $data['activities'],
+                "famer_phone" => $data['famer_phone'],
+                "farmer_email" => $data['farmer_email'],
+                "password" => $data['password'],
             ],
             [
-                "crop_id" => $data['crop_id']
+                "password" => $data['pastPassword']
             ]
         );
 
         if ($this->database->error) return $this->database->errorInfo;
+        // if ($this->database->error) return false;
         return  true;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 require_once './data/sidebarLearn.php';
 require_once './data/learnData.php';
+require_once './data/getFarmerData.php';
 
 ?>
 
@@ -72,7 +73,7 @@ require_once './data/learnData.php';
                                                         <div class="item text-center col-md-4">
                                                             <div class="product-miniature js-product-miniature item-one first-item">
                                                                 <div class="thumbnail-container border">
-                                                                    <a href="viewLearn.php?learn_id=<?= $data['id'] ?>">
+                                                                    <a href="viewLearn.php?learn_id=<?= $data['learn_unique'] ?>">
                                                                         <img class="img-fluid image-cover image-modi" src="<?= $image ?>" alt="img">
                                                                         <img class="img-fluid image-secondary image-modi" src="<?= $image ?>" alt="img">
                                                                     </a>

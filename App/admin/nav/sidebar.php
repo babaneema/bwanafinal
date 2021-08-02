@@ -48,19 +48,18 @@
                     <a href="#" class='sidebar-link'>
                         <i data-feather="users" width="20"></i>
                         <span>Crops </span>
+                    </a>
+                    <ul class="submenu ">
+                        <li>
+                            <a href="">Add</a>
+                        </li>
 
-                        <ul class="submenu ">
-
-                            <li>
-                                <a href="">Add</a>
-                            </li>
-
-                            <li>
-                                <a href="crops.php">View</a>
-                            </li>
+                        <li>
+                            <a href="crops.php">View</a>
+                        </li>
 
 
-                        </ul>
+                    </ul>
 
                 </li>
 
@@ -73,7 +72,7 @@
                     <ul class="submenu ">
 
                         <li>
-                            <a href="">Add</a>
+                            <a href="addServiceProvider.php">Add</a>
                         </li>
 
                         <li>

@@ -4,9 +4,7 @@ namespace App\Models;
 
 // include_once '../../vendor/autoload.php';
 
-
-use App\Models\Database;
-
+use App\Models\Connection;
 
 use \Datetime;
 use \DateTimeZone;
@@ -16,69 +14,121 @@ use \DateTimeZone;
 // error_reporting(E_ALL);
 
 
-
-class Learn extends Database
+class Learn extends Connection
 {
-
-
-    // table properties
-    protected array $colums_data;
-    protected array $colums_head;
-    protected $date;
-
-    private String $table_name = 'learning';
-
-
+    private $database;
+    private array $field;
+    private $table_name = 'learning';
+    private $date;
 
     public function __construct()
     {
-        $this->colums_data = [
-            'id' => '',
-            'subject_name' => '',
-            'crop_id' => '',
-            'provider_id' => '',
-            'video_link' => '',
-            'picture_link' => '',
-            'pdf_link' => '',
-            'learn_reg_date' => '',
+
+        $this->database = parent::connect();
+        $this->field = [
+            'learn_id', 'learn_unique', 'subject_name', ' crop_id',
+            'provider_id', 'video_link', 'picture_link', 'pdf_link',
+            'learn_reg_date'
         ];
-        $this->colums_head = array_keys($this->colums_data);
         $this->date = new DateTime(null, new DateTimeZone('Africa/Dar_es_Salaam'));
-        parent::__construct();
     }
 
     public function getAllData()
     {
-        return parent::superGetAllData($this->table_name);
+        $data = $this->database->select($this->table_name, $this->field);
+        // if ($this->database->error) return $this->database->errorInfo;
+        if ($this->database->error) return [];
+        return  $data;
     }
 
-    public function singeleLearn($id)
+    public function singeleLearn($learn_unique)
     {
-        return parent::superGetDataByColumn(table_name: 'learning', column: 'id', value: $id);
+        $data = $this->database->select(
+            $this->table_name,
+            $this->field,
+            ['learn_unique' => $learn_unique]
+        );
+        if ($this->database->error) return $this->database->errorInfo;
+        return  $data;
     }
 
-    public function getLearnByCrop($id)
+    public function getLearnByCrop($farmer_id)
     {
-        $sql = "SELECT * FROM  learning  WHERE crop_id=?";
-        return parent::superSqlWhere($sql, $id);
+        $data = $this->database->select(
+            $this->table_name,
+            $this->field,
+            [
+                'farmer_id' => $farmer_id
+            ]
+        );
+        if ($this->database->error) return $this->database->errorInfo;
+        return  $data;
     }
 
-
-    public function setData(array $data)
+    public function getAllById($farmer_id)
     {
-        foreach ($data as $key => $value) $this->colums_data[$key] = $value;
-        $this->colums_data['learn_reg_date'] = $this->date->format('Y-m-d');
+        $data = $this->database->select(
+            $this->table_name,
+            $this->field,
+            [
+                'farmer_id' => $farmer_id
+            ]
+        );
+        if ($this->database->error) return $this->database->errorInfo;
+        return  $data;
     }
 
-    public function create()
+    public function getAllByColumn($column, $value)
     {
-        // coppy array remove id and create a head and data
-        $insert_data = $this->colums_data;
-        unset($insert_data['id']);
-        $colum_head = array_keys($insert_data);
-        $data = array_values($insert_data);
+        $data = $this->database->select(
+            $this->table_name,
+            $this->field,
+            [$column => $value]
+        );
+        // if ($this->database->error) return $this->database->errorInfo;
+        if ($this->database->error) return false;
+        return  $data;
+    }
 
-        $save = parent::superCreate(table_name: $this->table_name, colums_in: $colum_head, data: $data);
-        return $save;
+    public function create(array $data)
+    {
+        $learn_unique = uniqid();
+        $this->database->insert($this->table_name, [
+            "learn_unique" => $learn_unique,
+            "subject_name" => $data['subject_name'],
+            "crop_id" => $data['crop_id'],
+            "provider_id" => $data['provider_id'],
+            "video_link" => $data['video_link'],
+            "picture_link" => $data['picture_link'],
+            "pdf_link" => $data['pdf_link'],
+            "learn_reg_date" =>  $this->date->format('Y-m-d'),
+        ]);
+
+        if ($this->database->error) return $this->database->errorInfo;
+        return $this->database->id();
+    }
+
+    public function update(array $data)
+    {
+        $this->database->update(
+            $this->table_name,
+            [
+                "farmer_name" => $data['farmer_name'],
+                "farmer_gender" => $data['farmer_gender'],
+                "farmer_district" => $data['farmer_district'],
+                "age_group" => $data['age_group'],
+                "activities" => $data['activities'],
+                "famer_phone" => $data['famer_phone'],
+                "farmer_email" => $data['farmer_email'],
+                "password" => $data['password'],
+            ],
+            [
+                "password" => $data['pastPassword']
+            ]
+        );
+
+        if ($this->database->error) return $this->database->errorInfo;
+        // if ($this->database->error) return false;
+        return  true;
     }
 }

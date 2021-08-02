@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-include_once '../../vendor/autoload.php';
+
 
 // ini_set('display_errors', 1);
 // ini_set('display_startup_errors', 1);
@@ -10,8 +10,8 @@ include_once '../../vendor/autoload.php';
 
 
 
-$service = new ServiceProvider();
-$serviceData = $service->getAllData();
+$serviceProvider = new ServiceProvider();
+$serviceData = $serviceProvider->getDataWithDistrict();
 if (!$serviceData) $serviceData = [];
 
 // var_dump($cropData);

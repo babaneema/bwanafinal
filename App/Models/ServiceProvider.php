@@ -6,7 +6,7 @@ namespace App\Models;
 
 
 use App\Models\Database;
-
+use App\Models\Connection;
 
 use \Datetime;
 use \DateTimeZone;
@@ -16,61 +16,139 @@ use \DateTimeZone;
 // error_reporting(E_ALL);
 
 
-
-class ServiceProvider extends Database
+class ServiceProvider extends Connection
 {
-
-
-    // table properties
-    protected array $colums_data;
-    protected array $colums_head;
-    protected $date;
-
-    private String $table_name = 'service_provider';
-
-
+    private $database;
+    private array $field;
+    private $table_name = 'service_provider';
+    private $date;
 
     public function __construct()
     {
-        $this->colums_data = [
-            'id' => '',
-            'provider_name' => '',
-            'provider_district' => '',
-            'provider_email' => '',
-            'service_offered' => '',
-            'provider_reg_date' => '',
+
+        $this->database = parent::connect();
+        $this->field = [
+            'provider_id', 'provider_unique', 'provider_name', ' provider_business_type',
+            'provider_district', 'provider_email', 'provider_phone_number', 'service_offered',
+            'provider_status', 'provider_reg_date'
         ];
-        $this->colums_head = array_keys($this->colums_data);
         $this->date = new DateTime(null, new DateTimeZone('Africa/Dar_es_Salaam'));
-        parent::__construct();
     }
 
     public function getAllData()
     {
-        return parent::superGetAllData($this->table_name);
+        $data = $this->database->select($this->table_name, $this->field);
+        if ($this->database->error) return [];
+        return  $data;
     }
 
-    public function singeleProvider($id)
+    public function getDataWithDistrict()
     {
-        return parent::superGetDataByColumn(table_name: 'service_provider', column: 'id', value: $id);
+        $data = $this->database->select(
+            $this->table_name,
+            ["[><]districts" => ["provider_district" => "id"]],
+            [
+                'provider_id', 'provider_unique', 'provider_name', ' provider_business_type',
+                'provider_district', 'provider_email', 'provider_phone_number', 'service_offered',
+                'provider_status', 'provider_reg_date', 'district_name'
+            ]
+        );
+        // if ($this->database->error) return [];
+        if ($this->database->error) return $this->database->error;
+        return  $data;
     }
 
-
-    public function setData(array $data)
+    public function singeleProvider($provider_id)
     {
-        foreach ($data as $key => $value) $this->colums_data[$key] = $value;
-        $this->colums_data['provider_reg_date'] = $this->date->format('Y-m-d');
+        $data = $this->database->select(
+            $this->table_name,
+            $this->field,
+            ['provider_id' => $provider_id]
+        );
+        if ($this->database->error) return $this->database->errorInfo;
+        return  $data;
     }
 
-    public function create()
+    public function getAllByColumn($column, $value)
     {
-        // coppy array remove id and create a head and data
-        $insert_data = $this->colums_data;
-        unset($insert_data['id']);
-        $colum_head = array_keys($insert_data);
-        $data = array_values($insert_data);
+        $data = $this->database->select(
+            $this->table_name,
+            $this->field,
+            [$column => $value]
+        );
+        // if ($this->database->error) return $this->database->errorInfo;
+        if ($this->database->error) return false;
+        return  $data;
+    }
 
-        $save = parent::superCreate(table_name: $this->table_name, colums_in: $colum_head, data: $data);
-        return $save;
+    public function getDatawithAddress($service_id)
+    {
+        $data = $this->database->select(
+            $this->table_name,
+            ["[><]districts" => ["provider_district" => "id"]],
+            [
+                'provider_id', 'provider_name', 'provider_business_type', ' provider_email',
+                'provider_phone_number', 'service_offered', 'district_name'
+            ],
+            ['provider_id' => $service_id]
+        );
+        // if ($this->database->error) return [];
+        if ($this->database->error) return $this->database->error;
+        return  $data;
+    }
+
+    public function create(array $data)
+    {
+        $provider_unique = uniqid();
+        $this->database->insert($this->table_name, [
+            "provider_unique" => $provider_unique,
+            "provider_name" => $data['provider_name'],
+            "provider_business_type" => $data['provider_business_type'],
+            "provider_district" => $data['provider_district'],
+            "provider_email" => $data['provider_email'],
+            "provider_phone_number" => $data['provider_phone_number'],
+            "service_offered" => $data['service_offered'],
+            "provider_reg_date" =>  $this->date->format('Y-m-d'),
+        ]);
+
+        if ($this->database->error) return $this->database->errorInfo;
+        return $this->database->id();
+    }
+
+    public function activate($provider_id)
+    {
+        $this->database->update(
+            $this->table_name,
+            ["provider_status" => 'active'],
+            ["provider_id" => $provider_id]
+        );
+
+        if ($this->database->error) return $this->database->errorInfo;
+        // if ($this->database->error) return false;
+        return  true;
+    }
+
+    public function update(array $data)
+    {
+        $this->database->update(
+            $this->table_name,
+            [
+                "farmer_name" => $data['farmer_name'],
+                "farmer_gender" => $data['farmer_gender'],
+                "farmer_district" => $data['farmer_district'],
+                "age_group" => $data['age_group'],
+                "activities" => $data['activities'],
+                "famer_phone" => $data['famer_phone'],
+                "farmer_email" => $data['farmer_email'],
+                "password" => $data['password'],
+            ],
+            [
+                "password" => $data['pastPassword']
+            ]
+        );
+
+        if ($this->database->error) return $this->database->errorInfo;
+        // if ($this->database->error) return false;
+        return  true;
     }
 }
