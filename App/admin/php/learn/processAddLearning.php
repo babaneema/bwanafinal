@@ -4,9 +4,9 @@ session_start();
 
 
 
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 
 
@@ -16,7 +16,6 @@ include_once '../../../../vendor/autoload.php';
 $upload_video_location = '../../../Assets/Learn/videos';
 $upload_image_location = '../../../Assets/Learn/images';
 $upload_document_location = '../../../Assets/Learn/documents';
-
 
 
 if (

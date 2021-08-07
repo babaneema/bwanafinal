@@ -68,7 +68,7 @@ require_once './data/getFarmerData.php';
                                     <?php include_once './navigation/serviceSidebar.php' ?>
                                     <div class="col-sm-8 col-lg-9 col-md-8 product-container">
                                         <!-- Sorting -->
-                                        <?php include_once './main/learn_sorting.php' ?>
+                                        <?php include_once './main/provider_sorting.php' ?>
                                         <div class="tab-content product-items">
                                             <div id="grid" class="related tab-pane fade in active show">
                                                 <div class="row">
@@ -141,7 +141,7 @@ require_once './data/getFarmerData.php';
                                         </div>
 
                                         <!-- pagination -->
-                                        <?php include_once './main/pagination.php' ?>
+                                        <?php include_once './main/service_provider.php' ?>
                                     </div>
 
                                     <!-- end col-md-9-1 -->
@@ -171,6 +171,17 @@ require_once './data/getFarmerData.php';
         </div>
     </div>
     <?php include_once './includes/footer.php' ?>
+
+    <script>
+        $(document).ready(() => {
+            $('#serviceSort').change(() => {
+                let sort = $('#serviceSort').val();
+                if (sort) {
+                    window.location = './serviceProvider.php?sort=' + sort;
+                }
+            })
+        })
+    </script>
 
 </body>
 

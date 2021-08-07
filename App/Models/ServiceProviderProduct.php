@@ -35,11 +35,21 @@ class ServiceProviderProduct extends Connection
         $this->date = new DateTime(null, new DateTimeZone('Africa/Dar_es_Salaam'));
     }
 
-    public function getAllData()
+    public function getAllData($start = 0, $amout = 12)
     {
-        $data = $this->database->select($this->table_name, $this->field);
+        $begin = $start * $amout;
+        $data = $this->database->select(
+            $this->table_name,
+            $this->field,
+            ["LIMIT" => [$begin, $amout]]
+        );
         if ($this->database->error) return [];
         return  $data;
+    }
+
+    public function count()
+    {
+        return $this->database->count($this->table_name);
     }
 
     public function getDataWithDistrictWithId($provider_id)

@@ -16,13 +16,11 @@
         </div>
         <div class="col col-xs-12">
             <div class="d-flex sort-by-row justify-content-lg-end justify-content-md-end">
-
                 <div class="products-sort-order dropdown">
-                    <select class="select-title">
+                    <select class="select-title" id="agroSort">
                         <option value="">Sort by</option>
-                        <option value="">Hortculture</option>
-                        <option value="">Crops</option>
-                        <option value="">Veterian</option>
+                        <option value="Horticulture">Hortculture</option>
+                        <option value="Cash Crops">Crops</option>
                     </select>
                 </div>
             </div>

@@ -8,3 +8,4 @@ $address = new \App\Models\Address();
 
 $regionData = $address->getRegionWithDistricts();
 // var_dump($regionData);
+// die();

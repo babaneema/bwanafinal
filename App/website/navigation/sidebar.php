@@ -6,14 +6,15 @@
         <div class="block-content">
             <?php
             foreach ($regionData as $regionDt) {
+                $uni = uniqid();
             ?>
                 <div class="cateTitle hasSubCategory open level1">
-                    <span class="arrow collapsed collapse-icons" data-toggle="collapse" data-target="#<?= $regionDt['region_name'] ?>" aria-expanded="false" role="status">
+                    <span class="arrow collapsed collapse-icons" data-toggle="collapse" data-target="#<?= $regionDt['id'] ?>" aria-expanded="false" role="status">
                         <i class="zmdi zmdi-minus"></i>
                         <i class="zmdi zmdi-plus"></i>
                     </span>
                     <a class="cateItem" href="#"><?= $regionDt['region_name'] ?></a>
-                    <div class="subCategory collapse" id="<?= $regionDt['region_name'] ?>" aria-expanded="false" role="status">
+                    <div class="subCategory collapse" id="<?= $regionDt['id'] ?>" aria-expanded="false" role="status">
 
                         <?php
                         foreach ($regionDt['districts'] as $distri) {

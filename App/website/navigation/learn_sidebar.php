@@ -10,12 +10,12 @@
                 $n++;
             ?>
                 <div class="cateTitle hasSubCategory open level1">
-                    <span class="arrow collapsed collapse-icons" data-toggle="collapse" data-target="#<?= $n ?>" aria-expanded="false" role="status">
+                    <span class="arrow collapsed collapse-icons" data-toggle="collapse" data-target="#<?= $learnDt['unique'] ?>" aria-expanded="false" role="status">
                         <i class="zmdi zmdi-minus"></i>
                         <i class="zmdi zmdi-plus"></i>
                     </span>
                     <a class="cateItem" href="#"><?= $learnDt['type'] ?></a>
-                    <div class="subCategory collapse" id="<?= $n ?>" aria-expanded="false" role="status">
+                    <div class="subCategory collapse" id="<?= $learnDt['unique'] ?>" aria-expanded="false" role="status">
 
                         <?php
                         foreach ($learnDt['crops'] as $sub) {

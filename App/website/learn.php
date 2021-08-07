@@ -121,7 +121,7 @@ require_once './data/getFarmerData.php';
                                         </div>
 
                                         <!-- pagination -->
-                                        <?php include_once './main/pagination.php' ?>
+                                        <?php include_once './main/learn_pagination.php' ?>
                                     </div>
 
                                     <!-- end col-md-9-1 -->

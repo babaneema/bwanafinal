@@ -166,6 +166,17 @@ require_once './data/getFarmerData.php';
     </div>
     <?php include_once './includes/footer.php' ?>
 
+    <script>
+        $(document).ready(() => {
+            $('#agroSort').change(() => {
+                let sort = $('#agroSort').val();
+                if (sort) {
+                    window.location = './index.php?sort=' + sort;
+                }
+            })
+        })
+    </script>
+
 </body>
 
 

@@ -49,7 +49,7 @@ if (
     }
 
     $_SESSION['successServiceProvider'] = True;
-    header('Location: ../../../serviceprovider.php');
+    header('Location: ../../serviceprovider.php');
     exit;
 } else {
     $_SESSION['serviceProvider'] = True;

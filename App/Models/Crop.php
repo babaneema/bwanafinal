@@ -60,6 +60,7 @@ class Crop extends Database
             $sql = "SELECT * FROM  crops  WHERE type=?";
             $cropData = parent::superSqlWhere($sql, $dt['type']);
             $data[$key]['crops'] = $cropData;
+            $data[$key]['unique'] = uniqid();
         }
         return $data;
     }

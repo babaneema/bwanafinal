@@ -65,9 +65,9 @@ if (isset($_SESSION['fileLearnError'])) {
                     </div>
 
                 </div>
-                <form action="./php/learn/processAddLearning.php" method="post" enctype="multipart/form-data">
-
+                <form action="./php/learn/processAddLearning.php" method="POST" enctype="multipart/form-data">
                     <!-- Education Information -->
+                    <input type="hidden" name="test" id="test" value="testing">
                     <section id="basic-input-groups">
                         <div class="row">
                             <div class="col-12">
@@ -133,8 +133,6 @@ if (isset($_SESSION['fileLearnError'])) {
                         </div>
                     </section>
 
-
-
                     <!-- Custom file input start -->
                     <section id="custom-file-input">
                         <div class="row">
@@ -189,11 +187,8 @@ if (isset($_SESSION['fileLearnError'])) {
                                                             </label>
                                                         </div>
                                                     </div>
-
                                                     </fieldset>
                                                 </div>
-
-
                                             </div>
 
                                         </div>
@@ -202,8 +197,7 @@ if (isset($_SESSION['fileLearnError'])) {
                             </div>
                         </div>
                     </section>
-                    <!-- Custom file input end -->
-                    <!-- Education Information -->
+
                     <section id="basic-input-groups">
                         <div class="row">
                             <div class="col-12">
